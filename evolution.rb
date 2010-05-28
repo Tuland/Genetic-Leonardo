@@ -21,8 +21,8 @@ module Enumerable
   end
   
   # Simula una roulette wheel per scegliere determinati elementi di un insieme
-  # * Ogni elemento ha una diversa probabilità di essere selezionato e ciò dipende dal proprio peso
-  # * Il modo di valutare il peso è definito da &weight_valuation
+  # * Ogni elemento ha una diversa probabilita' di essere selezionato e cio' dipende dal proprio peso
+  # * Il modo di valutare il peso e' definito da &weight_valuation
   # * round corrisponde al numero di selezioni che deve operare la ruota
   def roulette(round, &weight_valuation)
     total, ranges = weighted_wheel(&weight_valuation)
@@ -30,10 +30,10 @@ module Enumerable
     while true
       pointer = (rand * total) % total                                  # Genera un puntatore casuale
       ranges.each do |start, length, item|
-        if start <= pointer && pointer < start + length                 # Verifica se il puntatore è compreso nell'intervallo corrente
+        if start <= pointer && pointer < start + length                 # Verifica se il puntatore e' compreso nell'intervallo corrente
           selected.push(item)                                           # Includi l'item nei selezionati
         end
-        return selected unless selected.size < round                    # Cicla fino a quando è completa la selezione
+        return selected unless selected.size < round                    # Cicla fino a quando e' completa la selezione
       end
     end
   end
@@ -67,8 +67,8 @@ class Evolution
   
   DEFAULT_GENERATION_BUILDER = GENERATION_BUILDER["tournament"] 
   
-  CROSSOVER_PROB = 0.95                                                 # Probabilità del crossover
-  # MUTATION_PROB = 0.0001                                              # Probabilità della mutazione (Valore gestito dallo scheduler)
+  CROSSOVER_PROB = 0.95                                                 # Probabilita' del crossover
+  # MUTATION_PROB = 0.0001                                              # Probabilita' della mutazione (Valore gestito dallo scheduler)
   
   REPORT_EVERY = 10                                                     # temporizzazione (num. di generazioni) dei resoconti testuali
   SAVE_EVERY = 200                                                     # temporizzazione (num. di generazioni) della creazione delle immagini
@@ -93,7 +93,7 @@ class Evolution
     @scheduler = size_scheduler                                         # Gestore del numero dei poligoni
     @real_picture = real_picture                                        # Immagne originale
     @generation = (0...gen_size).map do                                 # Crea una generazione aleatoria composta da stringhe binarie 
-      Individual.new(@scheduler.start) { rand(2) }                      # Il numero di poligoni è definito dallo scheduler 
+      Individual.new(@scheduler.start) { rand(2) }                      # Il numero di poligoni e' definito dallo scheduler 
     end 
     @generation_size = gen_size                                         # Numero di individui nella popolazione
     @selection_size = sel_size                                          # Numero degli individui da salvare
@@ -149,7 +149,7 @@ class Evolution
   private
   
   # Crea la generazion successiva
-  # * Una parte è costituita dalla parte e da un'altra dall'elite che sopravvive da una generazione all'altra
+  # * Una parte e' costituita dalla parte e da un'altra dall'elite che sopravvive da una generazione all'altra
   def next_generation
     elite = fittests(@elitism_size)
     send(DEFAULT_GENERATION_BUILDER)                                    # Esegue il costruttore della generazione di default [Reflection]
@@ -184,7 +184,7 @@ class Evolution
   end
   
   # Aggiorna la generazione incrementando la dimensione degli individui (incremento del numero di poligoni)
-  # * l'incremento è gestito da scheduler_size 
+  # * l'incremento e' gestito da scheduler_size 
   def upgrade_generation
     elite = fittests(@elitism_size) 
     @generation = (0...@generation_size).map do
@@ -197,9 +197,9 @@ class Evolution
     end
   end
   
-  # Valuta quanto l'individuo è adatto a sopravviere 
+  # Valuta quanto l'individuo e' adatto a sopravviere 
   # * La valutazione viene fatta attraverso il confronto con l'immagine originale
-  # * La fitness è inversamente proporzionale alla differenca dell'immagine reale con quella artificiale
+  # * La fitness e' inversamente proporzionale alla differenca dell'immagine reale con quella artificiale
   def valuate(individual)
     individual.draw
     glFlush if @flush                                                   # Forza l'esecuzione dei comandi GL

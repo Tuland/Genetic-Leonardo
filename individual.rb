@@ -6,17 +6,17 @@ require 'enumerator'
 class Array
   
   # Mutazione
-  # * Muta il bit di ogni carattere della stringa con una determinata probabilità (passata per parametro)
+  # * Muta il bit di ogni carattere della stringa con una determinata probabilita (passata per parametro)
   def mutation!(probability)
     self.each_index do |i|
-      self[i] = self[i] ^ 1 if probability >= rand                    # Esegue lo XOR del bit (con una data probabilità)    
+      self[i] = self[i] ^ 1 if probability >= rand                    # Esegue lo XOR del bit (con una data probabilita)    
     end
     self
   end
   
   # Crossover uniforme
   # * Crea una maschera binaria
-  # * Se nella maschera c'è un 1 copia il bit del padre altrimenti quello della madre
+  # * Se nella maschera c'e' un 1 copia il bit del padre altrimenti quello della madre
   def uniform_crossover(other)
     size = self.size
     model = "%0#{size}b"                                              # Stringa binaria di una definita dimensione con 0 come riempitivo
@@ -61,13 +61,13 @@ class Individual
   
   # Inizializza una la stringa binaria del gene
   # * E' possibile passare un blocco per scegliere gli elementi della stringa binaria. Es: rand(2)
-  # * Senza il blocco è generata una stringa completamente casuale con il metodo rand
+  # * Senza il blocco e' generata una stringa completamente casuale con il metodo rand
   # * Passando una string viene utilizzata quella come genestring e non viene fatta alcuna inizializzazione
   def initialize(polygons_num ,genestring=nil)
     @genestring_size = Polygon::SIZE * polygons_num
     if genestring.nil?
         @genestring = (0...@genestring_size).map do                   
-          block_given?  ? yield : rand                                # Verifica se è stato passato un blocco: SI) esegue blocco NO) valore casuale
+          block_given?  ? yield : rand                                # Verifica se e' stato passato un blocco: SI) esegue blocco NO) valore casuale
         end
     else
       @genestring = genestring
@@ -76,14 +76,14 @@ class Individual
   
   # Procreazione: accoppiamento con un altro individuo
   # * Sceglie un individuo all'interno di mates ed esegue il crossover e la mutazione
-  # * Le probabilità del crossover e della mutazione sono definite rispettivamente da crossover_prob e mutation_prob 
+  # * Le probabilita del crossover e della mutazione sono definite rispettivamente da crossover_prob e mutation_prob 
   def procreate(mate, crossover_prob, mutation_prob, crossover_method_name)
     mate_str = mate.genestring
-    son_str = self.genestring.dup                                     # La stringa del figlio è per ora un clone di quella del padre
-    if crossover_prob >= rand                                         # Se rientra nella probabilità esegue il crossover se no usa se stesso
+    son_str = self.genestring.dup                                     # La stringa del figlio e' per ora un clone di quella del padre
+    if crossover_prob >= rand                                         # Se rientra nella probabilita esegue il crossover se no usa se stesso
       son_str = son_str.send(crossover_method_name, mate_str)         # [Reflection] Esegue il metodo di crossover scelto con parametro 'mate'
     end
-    son_str.mutation!(mutation_prob)                                  # Mutazione del figlio con una data probabilità
+    son_str.mutation!(mutation_prob)                                  # Mutazione del figlio con una data probabilita
     son_str
   end
   

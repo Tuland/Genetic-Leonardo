@@ -4,7 +4,7 @@ class SizeScheduler
   MAX = 50
   MIN = 1
   STEP = 1
-  INCREASE_EVERY = 500                                                  # NB: il timer è soggetto ad un bonus legato alla dimensione corrente
+  INCREASE_EVERY = 500                                                  # NB: il timer e' soggetto ad un bonus legato alla dimensione corrente
   PROB_FACTOR = 0.19
   
   attr_reader :start, :stop, :current, :offset, :changed, :probability
@@ -16,12 +16,12 @@ class SizeScheduler
     @current = min                                                      # Valore corrente
     @step = step                                                        # Valore di vanzamento
     @changed = false                                                    # Flag che indica il cambio di valore
-    @probability =  get_probability                                     # Probabilità della mutazione in relazione alla dimensione
+    @probability =  get_probability                                     # Probabilita' della mutazione in relazione alla dimensione
     @timer = INCREASE_EVERY
     puts_report
   end
   
-  # Incrementa lo stato dello scheduler e determina se è opportuno l'avanzamento della dimensione
+  # Incrementa lo stato dello scheduler e determina se e' opportuno l'avanzamento della dimensione
   def increase(count)
     if ( count == @timer && @current <= @stop )
       puts "Increase: #{@current}"  
@@ -44,12 +44,12 @@ class SizeScheduler
   end
   
   # Definisce un bonus di tempo al timer
-  # * Più la stringa è grande più ha bisogno di tempo
+  # * Piu' la stringa e' grande piu' ha bisogno di tempo
   def bonus(size)
     (size ** 2) / 5
   end
   
-  # Definisce la probabilirà in base alla dimensione corrente
+  # Definisce la probabilira' in base alla dimensione corrente
   def get_probability
     PROB_FACTOR / (@current * Polygon::SIZE)
   end

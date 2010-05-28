@@ -10,7 +10,7 @@ class Array
   
   # Aggiunge una normalizzazione a to_val (valore compreso fra 0.0 e 1.0)
   # * Se viene passato true come parametro si usano valori compresi fra -1.0 e 1.0
-  # * Il valore di default è false 
+  # * Il valore di default e' false 
   def to_val_norm(negative_enabled = false, z = 1.0)
     if negative_enabled
       num = self[1..-1]
